@@ -249,7 +249,8 @@
       .cartoes .placa:hover .corpo::before { color: var(--vermelho); }
       .cartoes h3 { font-size: 19px; }
       .cartoes p { margin-top: 8px; color: var(--nevoa); font-size: 16px; }
-      .aviso-loja { margin-top: 36px; color: var(--nevoa); max-width: 62ch; }
+      .acoes.loja { margin-top: 36px; }
+      .aviso-loja { margin-top: 16px; color: var(--nevoa); max-width: 62ch; }
 
       /* ---------- perguntas ---------- */
       .perguntas details { position: relative; border-top: 1px solid var(--borda); padding: 20px 0; max-width: 78ch; }
@@ -489,12 +490,15 @@
           <h2>Da instalação à sala</h2>
         </header>
         <ol class="cartoes">
-          <li><div class="placa entra recorte"><div class="corpo"><div><h3>Instale a Sincra</h3><p>Pela loja de complementos do Edge.</p></div></div></div></li>
+          <li><div class="placa entra recorte"><div class="corpo"><div><h3>Instale a Sincra</h3><p>Pela loja de complementos do Microsoft Edge.</p></div></div></div></li>
           <li><div class="placa entra persiana" style="--atraso: .1s"><div class="corpo"><div><h3>Abra a live</h3><p>Na Kick, a que você quer assistir.</p></div></div></div></li>
           <li><div class="placa entra sintonia" style="--atraso: .2s"><div class="corpo"><div><h3>Crie a sala</h3><p>Clique no ícone da Sincra e em "Criar sala".</p></div></div></div></li>
           <li><div class="placa entra foco" style="--atraso: .3s"><div class="corpo"><div><h3>Mande o convite</h3><p>Quem abre o link cai na mesma live e entra na sala.</p></div></div></div></li>
         </ol>
-        <p class="aviso-loja">A publicação na loja do Edge está em preparação e o link entra aqui quando ela for aprovada. A do Chrome vem depois.</p>
+        <div class="acoes loja">
+          <a class="botao" href="https://microsoftedge.microsoft.com/addons/detail/hhifgdinegmmpnphfacjjpbmfbhmchpc" target="_blank" rel="noopener">Baixar no Microsoft Edge</a>
+        </div>
+        <p class="aviso-loja">Por enquanto a Sincra está só na loja de complementos do Microsoft Edge. A versão para o Chrome vem depois.</p>
       </section>
 
       <section class="secao perguntas" id="perguntas">
