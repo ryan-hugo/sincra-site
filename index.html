@@ -10,6 +10,12 @@
     <meta property="og:image" content="img/link.png" />
     <link rel="icon" href="img/simbolo.svg" type="image/svg+xml" />
     <style>
+      /*
+        Sincra: a página inteira é a pista da extensão. Uma agulha vermelha atravessa a
+        abertura; a barra de quem está à frente passa dela e volta, uma vez, ao carregar.
+        Cantos retos, sombra dura, e um só tipo em três larguras: estreita e pesada para
+        títulos de cartaz e cronômetros, larga para a marca e subtítulos, normal para texto.
+      */
       @font-face {
         font-family: 'Archivo';
         src: url('fonts/archivo.woff2') format('woff2');
@@ -18,181 +24,270 @@
         font-display: swap;
       }
       :root {
-        --sinal: #e8112d; --noite: #0a0a0b; --anil: #1a1a1d; --giz: #f4efe6;
-        --nevoa: #a39e96; --amarelo: #f4efe6; --ciano: #9a958c; --magenta: #ff5a66;
-        --margem: clamp(20px, 6vw, 88px);
+        --preto: #0a0a0b; --carvao: #141416; --borda: #2c2c31; --osso: #f4efe6; --pedra: #9a958c;
+        --nevoa: #a39e96; --vermelho: #e8112d; --ambar: #ffb224;
+        --margem: clamp(20px, 6vw, 96px);
+        --agulha: 62%; /* onde a agulha corta a abertura */
       }
       * { box-sizing: border-box; margin: 0; }
       html { scroll-behavior: smooth; }
-      body { background: var(--noite); color: var(--giz); font: 400 18px/1.55 'Archivo', 'Segoe UI', system-ui, sans-serif; }
+      body { background: var(--preto); color: var(--osso); font: 400 18px/1.55 'Archivo', 'Segoe UI', system-ui, sans-serif; overflow-x: clip; }
       a { color: inherit; }
-      :focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
-      h1, h2, h3 { font-stretch: 118%; font-weight: 800; letter-spacing: -0.025em; line-height: 1.06; }
-      h2 { font-size: clamp(30px, 4.4vw, 50px); max-width: 18ch; }
-      .faixa-pagina { padding: clamp(56px, 9vw, 112px) var(--margem); }
-      .medida { max-width: 62ch; }
+      img { display: block; max-width: 100%; height: auto; }
+      :focus-visible { outline: 3px solid var(--osso); outline-offset: 3px; }
+      h1, h2 { font-weight: 900; font-stretch: 62%; line-height: 0.86; letter-spacing: -0.005em; }
+      h2 { font-size: clamp(48px, 7.4vw, 104px); max-width: 12ch; }
+      h3 { font-weight: 800; font-stretch: 118%; letter-spacing: -0.02em; line-height: 1.12; }
+      .secao { padding: clamp(64px, 9vw, 128px) var(--margem); }
       .nevoa { color: var(--nevoa); }
 
-      /* ---------- topo e abertura ---------- */
-      .abertura { background: var(--sinal); padding: 0 var(--margem) clamp(48px, 7vw, 88px); }
-      .topo { display: flex; align-items: center; gap: 28px; padding: 22px 0; font-weight: 600; font-size: 16px; }
-      .topo .logo { display: flex; align-items: center; gap: 10px; margin-right: auto; text-decoration: none;
-        font-size: 26px; font-weight: 800; font-stretch: 125%; letter-spacing: -0.035em; }
-      .topo .logo svg { width: 34px; height: 34px; }
-      .topo nav { display: flex; gap: 28px; }
-      .topo a:not(.logo) { text-decoration: none; }
-      .topo a:not(.logo):hover { text-decoration: underline; text-underline-offset: 5px; }
-      .abertura-grade { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px);
-        align-items: center; padding-top: clamp(28px, 5vw, 64px); }
-      h1 { font-size: clamp(38px, 4.9vw, 66px); }
-      .abertura p { margin-top: 22px; font-size: clamp(18px, 1.6vw, 21px); max-width: 46ch; }
-      .acoes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
-      .botao { display: inline-block; padding: 14px 22px; border-radius: 10px; font: inherit; font-weight: 700; text-decoration: none;
-        border: 2px solid var(--giz); background: var(--giz); color: var(--noite); cursor: pointer; }
-      .botao.vazado { background: transparent; color: var(--giz); }
-      .botao:hover { background: var(--amarelo); border-color: var(--amarelo); color: var(--noite); }
+      /* ---------- botões: sombra dura, afundam no clique ---------- */
+      .botao { display: inline-block; padding: 15px 24px; font: inherit; font-weight: 800; font-stretch: 112%; letter-spacing: -0.01em;
+        text-decoration: none; border: 0; cursor: pointer; background: var(--vermelho); color: var(--osso);
+        box-shadow: 5px 5px 0 var(--osso); transition: transform .06s, box-shadow .06s; }
+      .botao:hover { background: var(--osso); color: var(--preto); box-shadow: 5px 5px 0 var(--vermelho); }
+      .botao:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 var(--osso); }
+      .botao.vazado { background: none; color: var(--osso); box-shadow: inset 0 0 0 2px var(--osso); }
+      .botao.vazado:hover { background: var(--osso); color: var(--preto); }
+      .botao.vazado:active { transform: none; }
 
-      /* ---------- demonstração ---------- */
-      .demo { background: var(--noite); border-radius: 18px; padding: clamp(18px, 2.4vw, 30px); }
-      .pista { position: relative; display: grid; gap: 16px; padding: 22px 0; --ponto: 76%; }
-      .pista::after { content: ''; position: absolute; left: var(--ponto); top: 0; bottom: 0; width: 8px; margin-left: -4px;
-        border-radius: 4px; background: var(--sinal); }
-      .raia { height: clamp(74px, 9vw, 104px); border-radius: 999px 0 0 999px; display: flex; align-items: center;
-        justify-content: space-between; padding: 0 clamp(14px, 2vw, 24px) 0 clamp(18px, 2.6vw, 32px); color: var(--noite); }
+      /* ---------- topo ---------- */
+      .topo { display: flex; align-items: center; gap: 30px; padding: 20px var(--margem); font-weight: 600; font-size: 16px; }
+      .logo { display: flex; align-items: center; gap: 11px; margin-right: auto; text-decoration: none; font-size: 27px; font-weight: 800;
+        font-stretch: 125%; letter-spacing: -0.035em; line-height: 1; }
+      .logo svg { width: 26px; height: 26px; }
+      .topo nav { display: flex; gap: 30px; }
+      .topo nav a { text-decoration: none; }
+      .topo nav a:hover { text-decoration: underline; text-decoration-color: var(--vermelho); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+      .topo .botao { padding: 10px 16px; font-size: 15px; box-shadow: 3px 3px 0 var(--osso); }
+
+      /* ---------- abertura ---------- */
+      .abertura { display: grid; grid-template-columns: var(--agulha) 1fr; border-top: 1px solid var(--borda); }
+      .abertura-texto { padding: clamp(36px, 5vw, 72px) 0 clamp(48px, 6vw, 88px) var(--margem); border-right: 3px solid var(--vermelho); min-width: 0; }
+      .abertura-texto > * { padding-right: clamp(20px, 4vw, 56px); }
+      h1 { font-size: clamp(88px, 12.6vw, 216px); margin-left: -0.03em; }
+      /* As duas barras encostam na agulha, que é a borda da coluna. */
+      .abertura-texto .raias { padding-right: 0; margin: clamp(24px, 3vw, 40px) 0 clamp(26px, 3vw, 40px); display: grid; gap: 8px; }
+      .raias i { display: block; height: clamp(30px, 3.2vw, 44px); padding: 0 14px; font-style: normal; font-weight: 800; font-stretch: 75%;
+        font-size: clamp(14px, 1.3vw, 18px); line-height: clamp(30px, 3.2vw, 44px); letter-spacing: .02em; color: var(--preto); white-space: nowrap; }
+      .raias i:first-child { background: var(--osso); animation: encostar 1.9s cubic-bezier(.2,.8,.2,1) .5s backwards; }
+      .raias i + i { background: var(--pedra); }
+      @keyframes encostar { from { width: 128%; } to { width: 100%; } }
+      .abertura p { font-size: clamp(18px, 1.55vw, 22px); max-width: 44ch; }
+      .acoes { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; }
+      .abertura-demo { display: grid; place-items: center; padding: clamp(28px, 4vw, 56px) clamp(20px, 3vw, 48px); position: relative; }
+
+      /* ---------- gravações da extensão ---------- */
+      .janela { margin: 0; width: min(340px, 100%); }
+      .janela img, .janela picture { width: 100%; border: 1px solid var(--borda); box-shadow: 12px 12px 0 var(--vermelho); background: var(--preto); }
+      .janela picture { display: block; border: 0; }
+      .janela figcaption { margin-top: 26px; color: var(--nevoa); font-size: 14px; line-height: 1.45; }
+
+      /* ---------- régua ---------- */
+      .regua { height: 14px; border-top: 1px solid var(--borda);
+        background: repeating-linear-gradient(90deg, var(--pedra) 0 1px, transparent 1px 12px) top / 100% 6px no-repeat,
+          repeating-linear-gradient(90deg, var(--pedra) 0 1px, transparent 1px 120px) top / 100% 14px no-repeat; opacity: .55; }
+
+      /* ---------- como alinha ---------- */
+      .dupla { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; margin-top: clamp(36px, 5vw, 64px); }
+      .passos { list-style: none; padding: 0; counter-reset: passo; }
+      .passos li { counter-increment: passo; display: grid; grid-template-columns: clamp(52px, 6vw, 84px) minmax(0, 1fr); gap: 0 clamp(14px, 2vw, 28px);
+        padding: 26px 0; border-top: 1px solid var(--borda); }
+      .passos li:last-child { border-bottom: 1px solid var(--borda); }
+      .passos li::before { content: counter(passo); font-weight: 900; font-stretch: 62%; line-height: 0.82; font-size: clamp(60px, 7vw, 100px); color: var(--vermelho); }
+      .passos h3 { font-size: clamp(20px, 2vw, 26px); }
+      .passos p { margin-top: 8px; color: var(--nevoa); max-width: 52ch; }
+
+      .simulacao { position: sticky; top: 24px; background: var(--carvao); border: 1px solid var(--borda); padding: clamp(18px, 2.4vw, 30px); box-shadow: 12px 12px 0 var(--vermelho); }
+      .pista { position: relative; display: grid; gap: 10px; padding: 16px 0; --ponto: 76%; }
+      .pista::after { content: ''; position: absolute; left: var(--ponto); top: 0; bottom: 0; width: 4px; margin-left: -2px; background: var(--vermelho); }
+      .raia { height: clamp(70px, 8vw, 100px); display: flex; align-items: center; justify-content: space-between;
+        padding: 0 clamp(12px, 1.6vw, 22px) 0 clamp(14px, 2vw, 24px); color: var(--preto); }
       /* A sobra depois da linha fica vazia: o cronômetro para sempre antes dela. */
-      .raia.a { background: var(--amarelo); width: calc(var(--ponto) + var(--sobra, 0%));
-        padding-right: calc(var(--sobra, 0%) + clamp(14px, 2vw, 24px)); }
-      .raia.b { background: var(--ciano); width: var(--ponto); }
-      .raia span { font-weight: 700; font-size: clamp(13px, 1.3vw, 16px); }
-      .raia time { font-weight: 900; font-stretch: 62%; font-variant-numeric: tabular-nums; line-height: 1;
-        font-size: clamp(52px, 7vw, 86px); }
-      .demo-pe { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
-      .demo-pe output { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 0; flex: 1 1 220px; }
-      .demo-pe output[data-estado='fora'] { color: var(--magenta); }
-      .demo-pe output[data-estado='ajuste'] { color: #ffb224; }
-      .demo-pe output[data-estado='ok'] { color: var(--giz); }
-      .demo-pe button { padding: 11px 18px; border-radius: 10px; border: 0; background: var(--sinal); color: var(--giz);
-        font: inherit; font-weight: 700; cursor: pointer; }
-      .demo-pe button:hover { background: #ff3347; }
-      .demo small { display: block; margin-top: 12px; color: var(--nevoa); font-size: 14px; }
+      .raia.a { background: var(--osso); width: calc(var(--ponto) + var(--sobra, 0%)); padding-right: calc(var(--sobra, 0%) + clamp(12px, 1.6vw, 22px)); }
+      .raia.b { background: var(--pedra); width: var(--ponto); }
+      .raia span { font-weight: 800; font-stretch: 80%; font-size: clamp(13px, 1.2vw, 16px); }
+      .raia time { font-weight: 900; font-stretch: 62%; font-variant-numeric: tabular-nums; line-height: 1; font-size: clamp(50px, 6.4vw, 84px); }
+      .simulacao-pe { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 14px; }
+      .simulacao-pe output { font-weight: 800; font-stretch: 112%; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; min-width: 0; flex: 1 1 200px; }
+      .simulacao-pe output[data-estado='fora'] { color: #ff5a66; }
+      .simulacao-pe output[data-estado='ajuste'] { color: var(--ambar); }
+      .simulacao-pe output[data-estado='ok'] { color: var(--osso); }
+      .simulacao-pe .botao { padding: 11px 18px; font-size: 16px; box-shadow: 4px 4px 0 var(--osso); }
+      .simulacao small { display: block; margin-top: 14px; color: var(--nevoa); font-size: 14px; }
 
-      /* ---------- como funciona ---------- */
-      .passos { list-style: none; padding: 0; margin-top: 48px; display: grid; gap: 0; counter-reset: passo; }
-      .passos li { counter-increment: passo; display: grid; grid-template-columns: clamp(64px, 9vw, 120px) minmax(0, 1fr);
-        gap: 8px clamp(16px, 3vw, 40px); padding: 28px 0; border-top: 1px solid #34343a; }
-      .passos li::before { content: counter(passo); font-weight: 900; font-stretch: 62%; line-height: 0.8;
-        font-size: clamp(64px, 9vw, 120px); color: var(--amarelo); }
-      .passos h3 { font-size: clamp(22px, 2.4vw, 30px); }
-      .passos p { margin-top: 8px; color: var(--nevoa); max-width: 58ch; }
-      .medicao { margin-top: 36px; padding: 22px 26px; border-left: 6px solid var(--sinal); background: var(--anil); border-radius: 0 12px 12px 0; max-width: 70ch; }
+      /* ---------- cada um por um streamer ---------- */
+      .canais { background: var(--carvao); border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); }
+      .canais .dupla { grid-template-columns: minmax(0, 380px) minmax(0, 1fr); align-items: center; margin-top: 0; }
+      .canais h2 { max-width: 11ch; }
+      .canais p { margin-top: 22px; max-width: 50ch; color: #d9d4ca; }
+      .canais ul { list-style: none; padding: 0; margin-top: 26px; display: grid; gap: 14px; max-width: 54ch; }
+      .canais li, .duas li { position: relative; padding-left: 28px; }
+      .canais li::before, .duas li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 10px; height: 10px; background: var(--vermelho); }
+
+      /* ---------- medição: a faixa vermelha ---------- */
+      .medicao { background: var(--vermelho); color: var(--preto); padding: clamp(44px, 6vw, 84px) var(--margem); }
+      .medicao p { font-weight: 800; font-stretch: 112%; letter-spacing: -0.02em; line-height: 1.16; font-size: clamp(24px, 3.3vw, 46px); max-width: 26ch; }
+      .medicao small { display: block; margin-top: 20px; font-size: 16px; font-weight: 600; max-width: 60ch; }
 
       /* ---------- faz e não faz ---------- */
-      .limites { background: var(--anil); }
-      .duas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(28px, 5vw, 72px); margin-top: 44px; }
-      .duas h3 { font-size: 24px; margin-bottom: 14px; }
-      .duas ul { list-style: none; padding: 0; display: grid; gap: 12px; }
-      .duas li { padding-left: 26px; position: relative; }
-      .duas li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 14px; height: 5px; border-radius: 3px; background: var(--sinal); }
-      .duas .nao li::before { background: var(--nevoa); }
+      .duas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(28px, 5vw, 80px); margin-top: clamp(36px, 5vw, 64px); }
+      .duas h3 { font-size: 24px; margin-bottom: 18px; }
+      .duas ul { list-style: none; padding: 0; display: grid; gap: 13px; }
+      .duas .nao li::before { background: none; box-shadow: inset 0 0 0 2px var(--pedra); }
 
       /* ---------- instalar ---------- */
-      .instalar ol { margin-top: 36px; padding-left: 1.3em; display: grid; gap: 14px; max-width: 64ch; }
-      .instalar li::marker { font-weight: 800; color: var(--amarelo); }
-      .instalar code { font-family: Consolas, 'Courier New', monospace; font-size: 0.92em; background: var(--anil); padding: 2px 7px; border-radius: 6px; }
-      .aviso-loja { margin-top: 28px; color: var(--nevoa); max-width: 64ch; }
+      .instalar { border-top: 1px solid var(--borda); }
+      .instalar .passos { margin-top: clamp(36px, 5vw, 64px); max-width: 780px; }
+      .aviso-loja { margin-top: 28px; color: var(--nevoa); max-width: 62ch; }
 
       /* ---------- perguntas ---------- */
-      .perguntas details { border-top: 1px solid #34343a; padding: 20px 0; max-width: 72ch; }
-      .perguntas details:last-of-type { border-bottom: 1px solid #34343a; }
-      .perguntas summary { cursor: pointer; font-weight: 700; font-size: 20px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+      .perguntas { border-top: 1px solid var(--borda); }
+      .perguntas h2 { margin-bottom: clamp(32px, 4vw, 52px); }
+      .perguntas details { border-top: 1px solid var(--borda); padding: 20px 0; max-width: 74ch; }
+      .perguntas details:last-of-type { border-bottom: 1px solid var(--borda); }
+      .perguntas summary { cursor: pointer; font-weight: 800; font-stretch: 112%; letter-spacing: -0.01em; font-size: 20px; list-style: none;
+        display: flex; justify-content: space-between; gap: 16px; }
       .perguntas summary::-webkit-details-marker { display: none; }
-      .perguntas summary::after { content: '+'; font-weight: 800; color: var(--amarelo); }
+      .perguntas summary::after { content: '+'; font-weight: 900; color: var(--vermelho); }
       .perguntas details[open] summary::after { content: '\2212'; }
       .perguntas details p { margin-top: 10px; color: var(--nevoa); }
-      .perguntas h2 { margin-bottom: 40px; }
 
-      footer { padding: 36px var(--margem) 48px; color: var(--nevoa); font-size: 15px; border-top: 1px solid #34343a; }
+      footer { padding: 36px var(--margem) 52px; color: var(--nevoa); font-size: 15px; border-top: 1px solid var(--borda); }
       footer p + p { margin-top: 10px; }
 
-      @media (max-width: 860px) {
-        .abertura-grade { grid-template-columns: 1fr; }
+      @media (max-width: 880px) {
         .topo nav { display: none; }
+        .abertura { grid-template-columns: 1fr; }
+        .abertura-texto { border-right: 0; padding-right: var(--margem); }
+        .abertura-texto > * { padding-right: 0; }
+        h1 { font-size: clamp(84px, 27vw, 190px); }
+        /* No celular a agulha fica na ponta das barras. */
+        .abertura-texto .raias { position: relative; padding-right: 16%; }
+        .abertura-texto .raias::after { content: ''; position: absolute; right: 16%; top: -8px; bottom: -8px; width: 3px; background: var(--vermelho); }
+        @keyframes encostar { from { width: 116%; } to { width: 100%; } }
+        .abertura-demo { padding: 8px var(--margem) 64px; place-items: start; }
+        .dupla, .canais .dupla { grid-template-columns: 1fr; }
+        .simulacao { position: static; }
+        .janela img, .janela picture, .simulacao { box-shadow: 8px 8px 0 var(--vermelho); }
       }
-      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .raias i:first-child { animation: none; }
+        .botao { transition: none; }
+      }
     </style>
   </head>
   <body>
+    <header class="topo">
+      <a class="logo" href="#" aria-label="Sincra, início">
+        <svg viewBox="0 0 26 26" aria-hidden="true"><rect x="0" y="5" width="19" height="6" fill="#f4efe6"/><rect x="7" y="15" width="12" height="6" fill="#9a958c"/><rect x="18" y="0" width="3" height="26" fill="#e8112d"/></svg>
+        sincra
+      </a>
+      <nav>
+        <a href="#como">Como funciona</a>
+        <a href="#canais">Outro streamer</a>
+        <a href="#perguntas">Perguntas</a>
+      </nav>
+      <a class="botao" href="#instalar">Instalar</a>
+    </header>
+
     <div class="abertura">
-      <header class="topo">
-        <a class="logo" href="#" aria-label="Sincra, início">
-          <svg viewBox="0 0 128 128" aria-hidden="true"><rect width="128" height="128" rx="30" fill="#0a0a0b"/><rect x="22" y="37" width="70" height="20" rx="10" fill="#f4efe6"/><rect x="46" y="71" width="46" height="20" rx="10" fill="#9a958c"/><rect x="86" y="22" width="11" height="84" rx="5.5" fill="#f4efe6"/></svg>
-          sincra
-        </a>
-        <nav>
-          <a href="#como">Como funciona</a>
-          <a href="#limites">O que faz</a>
-          <a href="#perguntas">Perguntas</a>
-        </nav>
-      </header>
-
-      <div class="abertura-grade">
-        <div>
-          <h1>A jogada na mesma hora para todo mundo da call.</h1>
-          <p>A Sincra é uma extensão que alinha a live da Kick entre os streamers de uma watchparty. Quem está adiantado desacelera por alguns segundos e todos passam a ver o mesmo momento.</p>
-          <div class="acoes">
-            <a class="botao" href="#instalar">Instalar a extensão</a>
-            <a class="botao vazado" href="#como">Ver como funciona</a>
-          </div>
-        </div>
-
-        <div class="demo" aria-label="Demonstração: dois streamers assistindo à mesma live">
-          <div class="pista" id="pista">
-            <div class="raia a"><span>Streamer A</span><time id="relogio-a">0:13</time></div>
-            <div class="raia b"><span>Streamer B</span><time id="relogio-b">0:17</time></div>
-          </div>
-          <div class="demo-pe">
-            <output id="estado" data-estado="fora">A está 4,0 s à frente de B</output>
-            <button id="alternar" type="button">Sincronizar</button>
-          </div>
-          <small>Simulação do cronômetro do round. A linha vermelha é o ponto de encontro.</small>
+      <div class="abertura-texto">
+        <h1>No mesmo segundo.</h1>
+        <div class="raias" aria-hidden="true"><i>você</i><i>o resto da call</i></div>
+        <p>A Sincra é uma extensão que alinha a live da Kick entre os streamers de uma watchparty. Quem está adiantado desacelera por alguns segundos e todos passam a ver a mesma jogada juntos.</p>
+        <div class="acoes">
+          <a class="botao" href="#instalar">Instalar a extensão</a>
+          <a class="botao vazado" href="#como">Ver como funciona</a>
         </div>
       </div>
+      <div class="abertura-demo">
+        <figure class="janela">
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="img/demo-sala.png" />
+            <img src="img/demo-sala.gif" width="680" height="1240" alt="Gravação da extensão: a pessoa cria a sala, copia o convite, outra pessoa entra e as duas barras encostam na linha vermelha até aparecer Sincronizado." />
+          </picture>
+          <figcaption>Gravação da própria extensão, com uma sala simulada. O tempo do ajuste está acelerado.</figcaption>
+        </figure>
+      </div>
     </div>
+    <div class="regua" aria-hidden="true"></div>
 
     <main>
-      <section class="faixa-pagina" id="como">
+      <section class="secao" id="como">
         <h2>Como a Sincra alinha as lives</h2>
-        <ol class="passos">
-          <li>
-            <div>
-              <h3>Cada player diz em que ponto da live está</h3>
-              <p>A transmissão da Kick carrega o horário de cada trecho. A Sincra lê esse horário no seu navegador, sem mexer na sua transmissão.</p>
+        <div class="dupla">
+          <ol class="passos">
+            <li>
+              <div>
+                <h3>Cada player diz em que ponto da live está</h3>
+                <p>A transmissão da Kick carrega o horário de cada trecho. A Sincra lê esse horário no seu navegador, sem mexer na sua transmissão.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>A sala compara os participantes</h3>
+                <p>Quem abriu o mesmo convite troca essa posição direto entre os navegadores, sem servidor no meio.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Quem está na frente espera</h3>
+                <p>O player adiantado toca mais devagar até alcançar o mais atrasado e depois volta ao normal. Se alguém travar ou cair, o ajuste se repete sozinho.</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="simulacao" aria-label="Demonstração: dois streamers assistindo à mesma live">
+            <div class="pista" id="pista">
+              <div class="raia a"><span>Streamer A</span><time id="relogio-a">0:13</time></div>
+              <div class="raia b"><span>Streamer B</span><time id="relogio-b">0:17</time></div>
             </div>
-          </li>
-          <li>
-            <div>
-              <h3>A sala compara os participantes</h3>
-              <p>Quem abriu o mesmo convite troca essa posição direto entre os navegadores, sem servidor no meio.</p>
+            <div class="simulacao-pe">
+              <output id="estado" data-estado="fora">A está 4,0 s à frente de B</output>
+              <button id="alternar" class="botao" type="button">Sincronizar</button>
             </div>
-          </li>
-          <li>
-            <div>
-              <h3>Quem está na frente espera</h3>
-              <p>O player adiantado toca mais devagar até alcançar o mais atrasado e depois volta ao normal. Se alguém travar ou cair, o ajuste se repete sozinho.</p>
-            </div>
-          </li>
-        </ol>
-        <p class="medicao">Em teste com dois navegadores em uma live real de Valorant, uma diferença de 3,8 s foi alinhada em 14 s e ficou abaixo de 0,3 s nos dois minutos seguintes.</p>
+            <small>Simulação do cronômetro do round. A linha vermelha é o ponto de encontro. Clique para ver o ajuste.</small>
+          </div>
+        </div>
       </section>
 
-      <section class="faixa-pagina limites" id="limites">
+      <section class="secao canais" id="canais">
+        <div class="dupla">
+          <figure class="janela">
+            <picture>
+              <source media="(prefers-reduced-motion: reduce)" srcset="img/demo-canais.png" />
+              <img src="img/demo-canais.gif" width="680" height="1240" loading="lazy" alt="Gravação da extensão: com duas pessoas em canais diferentes, a pessoa aumenta o ajuste de um canal em 1,4 segundo e a barra dela desliza até a linha vermelha." />
+            </picture>
+            <figcaption>Gravação da própria extensão, com uma sala simulada. O tempo do ajuste está acelerado.</figcaption>
+          </figure>
+          <div>
+            <h2>Cada um na live de um streamer</h2>
+            <p>Dois streamers na mesma partida, em times diferentes. Você assiste por um, seu amigo pelo outro, e os dois veem o mesmo round ao mesmo tempo.</p>
+            <ul>
+              <li>Entre na sala e abra, na mesma aba, o canal do streamer que você quer ver.</li>
+              <li>A Sincra alinha pelo horário em que cada transmissão chega na Kick.</li>
+              <li>Se um streamer transmite com atraso, compare o cronômetro da rodada nas duas telas e acerte o ajuste entre canais, em passos de 0,1 s.</li>
+              <li>Quem acerta uma vez acerta para a sala toda.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="medicao">
+        <p>3,9 s de diferença alinhados em 15 s. Depois, menos de 0,3 s de diferença por dois minutos.</p>
+        <small>Medido com dois navegadores em uma live real de Valorant na Kick, pelo atraso que o próprio player informa.</small>
+      </section>
+
+      <section class="secao" id="limites">
         <h2>O que ela faz e o que não faz</h2>
         <div class="duas">
           <div>
             <h3>Faz</h3>
             <ul>
               <li>Alinha todo mundo que está na mesma sala.</li>
-              <li>Funciona com cada pessoa na live de um streamer diferente da mesma partida, com um ajuste fino entre os canais.</li>
+              <li>Funciona com cada pessoa na live de um streamer diferente da mesma partida.</li>
               <li>Corrige sozinha durante a live, sem pausa e sem contagem.</li>
               <li>Mostra no canto da tela quem está no ponto e quem está à frente.</li>
               <li>Reconecta sozinha se a sala cair.</li>
@@ -210,18 +305,18 @@
         </div>
       </section>
 
-      <section class="faixa-pagina instalar" id="instalar">
-        <h2>Instalar no Edge ou no Chrome</h2>
-        <ol>
-          <li>Instale a Sincra pela loja de complementos do Edge.</li>
-          <li>Abra na Kick a live que você quer assistir.</li>
-          <li>Clique no ícone da Sincra e em "Criar sala".</li>
-          <li>Mande o link de convite para o grupo. Quem abre o link entra na sala.</li>
+      <section class="secao instalar" id="instalar">
+        <h2>Instalar e criar a sala</h2>
+        <ol class="passos">
+          <li><div><h3>Instale a Sincra pela loja de complementos do Edge</h3></div></li>
+          <li><div><h3>Abra na Kick a live que você quer assistir</h3></div></li>
+          <li><div><h3>Clique no ícone da Sincra e em "Criar sala"</h3></div></li>
+          <li><div><h3>Mande o link de convite para o grupo</h3><p>Quem abre o link cai na mesma live e entra na sala.</p></div></li>
         </ol>
         <p class="aviso-loja">A publicação na loja do Edge está em preparação e o link entra aqui quando ela for aprovada. A do Chrome vem depois.</p>
       </section>
 
-      <section class="faixa-pagina perguntas" id="perguntas">
+      <section class="secao perguntas" id="perguntas">
         <h2>Perguntas que os streamers fazem</h2>
         <details>
           <summary>Minha audiência precisa instalar alguma coisa?</summary>
@@ -241,7 +336,7 @@
         </details>
         <details>
           <summary>Funciona se cada um estiver em um canal?</summary>
-          <p>Sim. Dá para ver a mesma partida pela live de streamers diferentes. A Sincra alinha pelo horário em que cada transmissão chega na Kick, e um ajuste fino no painel da extensão cobre o atraso próprio de cada streamer. Quem acerta uma vez acerta para a sala toda.</p>
+          <p>Sim. Dá para ver a mesma partida pela live de streamers diferentes. A Sincra alinha pelo horário em que cada transmissão chega na Kick, e um ajuste fino no painel da extensão cobre o atraso próprio de cada streamer.</p>
         </details>
         <details>
           <summary>A Sincra é da Kick?</summary>
