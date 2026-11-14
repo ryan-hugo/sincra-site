@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacidade na Sincra</title>
+    <meta name="description" content="O que a extensão Sincra envia, para quem, e o que ela não coleta." />
+    <link rel="icon" href="img/simbolo.svg" />
+    <style>
+      @font-face {
+        font-family: 'Archivo';
+        src: url('fonts/archivo.woff2') format('woff2');
+        font-weight: 100 900;
+        font-stretch: 62% 125%;
+        font-display: swap;
+      }
+      :root { --sinal: #e8112d; --noite: #0a0a0b; --giz: #f4efe6; --nevoa: #a39e96; --margem: clamp(20px, 6vw, 88px); }
+      * { box-sizing: border-box; margin: 0; }
+      body { background: var(--noite); color: var(--giz); font: 400 18px/1.6 'Archivo', 'Segoe UI', system-ui, sans-serif; }
+      a { color: inherit; }
+      :focus-visible { outline: 3px solid var(--giz); outline-offset: 3px; }
+      header { background: var(--sinal); padding: 22px var(--margem); }
+      header a { display: inline-flex; align-items: center; gap: 10px; color: var(--noite); text-decoration: none;
+        font-size: 26px; font-weight: 800; font-stretch: 125%; letter-spacing: -0.035em; }
+      header svg { width: 30px; height: 30px; }
+      main { padding: clamp(40px, 7vw, 88px) var(--margem); max-width: calc(68ch + 2 * var(--margem)); }
+      h1 { font-size: clamp(34px, 4.6vw, 56px); font-weight: 800; font-stretch: 118%; letter-spacing: -0.025em; line-height: 1.06; }
+      h2 { margin: 44px 0 10px; padding-top: 22px; border-top: 1px solid #34343a; font-size: 24px; font-weight: 800;
+        font-stretch: 112%; letter-spacing: -0.015em; }
+      p, li { color: #d9d4ca; }
+      p { margin-top: 14px; }
+      ul { margin-top: 14px; padding-left: 1.2em; display: grid; gap: 8px; }
+      .data { color: var(--nevoa); font-size: 16px; }
+      footer { padding: 32px var(--margem) 48px; color: var(--nevoa); font-size: 15px; border-top: 1px solid #34343a; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="./" aria-label="Sincra, início">
+        <svg viewBox="0 0 26 26" aria-hidden="true"><rect x="0" y="5" width="19" height="6" fill="#0a0a0b"/><rect x="7" y="15" width="12" height="6" fill="#f4efe6"/><rect x="18" y="0" width="3" height="26" fill="#0a0a0b"/></svg>
+        sincra
+      </a>
+    </header>
+    <main>
+      <h1>Privacidade na Sincra</h1>
+      <p class="data">Atualizada em 14 de novembro de 2026.</p>
+      <p>A Sincra é uma extensão que sincroniza a live da Kick entre pessoas que entram na mesma sala. Esta página diz o que ela envia, para quem, e o que ela não coleta.</p>
+
+      <h2>O que a extensão envia</h2>
+      <p>Enquanto você está em uma sala, a extensão envia direto para os outros participantes dessa sala:</p>
+      <ul>
+        <li>o nome que você digitou;</li>
+        <li>o canal da Kick aberto na aba;</li>
+        <li>o atraso do seu player e se ele está tocando;</li>
+        <li>o ajuste entre canais, quando alguém da sala configurou um.</li>
+      </ul>
+      <p>Não existe servidor da Sincra no meio. Esses dados vão de um navegador para o outro e existem só enquanto você está na sala.</p>
+
+      <h2>Como os navegadores se encontram</h2>
+      <p>Para duas pessoas se conectarem, a extensão publica uma mensagem de encontro em relays públicos da rede Nostr, que são de terceiros. A mensagem vai cifrada com o código da sala, então os relays não leem o conteúdo. Eles veem o seu endereço IP, como qualquer site que você visita.</p>
+
+      <h2>Endereço IP dentro da sala</h2>
+      <p>A conexão entre os participantes é direta. Por isso, quem está na mesma sala consegue ver o endereço IP dos outros. O código da sala funciona como senha: mande o convite só para quem vai assistir com você.</p>
+
+      <h2>O que fica no seu navegador</h2>
+      <p>A sala, o nome, o ajuste entre canais e, se você configurou, o endereço de um servidor próprio ficam salvos só no seu navegador. Sair da sala apaga o código dela das preferências.</p>
+
+      <h2>O que a Sincra não faz</h2>
+      <ul>
+        <li>Não pede conta nem senha.</li>
+        <li>Não lê o que você digita na Kick nem dados da sua conta.</li>
+        <li>Não roda em nenhum site além de kick.com.</li>
+        <li>Não guarda histórico de navegação nem localização.</li>
+        <li>Não vende dados nem usa dados para publicidade.</li>
+      </ul>
+
+      <h2>Servidor próprio</h2>
+      <p>Quem preferir pode configurar o endereço de um servidor de sala próprio. Nesse caso os dados da sala passam por esse servidor, que é de responsabilidade de quem o mantém, e não pela conexão direta.</p>
+
+      <h2>Contato</h2>
+      <p>Dúvidas ou pedidos sobre privacidade: abra um tópico em <a href="https://github.com/ryan-hugo/sincra-site/issues">github.com/ryan-hugo/sincra-site/issues</a>.</p>
+    </main>
+    <footer>Sincra é um projeto independente e não tem vínculo com a Kick.</footer>
+  </body>
+</html>

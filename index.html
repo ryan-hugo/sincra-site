@@ -56,7 +56,7 @@
       .demo { background: var(--noite); border-radius: 18px; padding: clamp(18px, 2.4vw, 30px); }
       .pista { position: relative; display: grid; gap: 16px; padding: 22px 0; --ponto: 76%; }
       .pista::after { content: ''; position: absolute; left: var(--ponto); top: 0; bottom: 0; width: 8px; margin-left: -4px;
-        border-radius: 4px; background: var(--giz); }
+        border-radius: 4px; background: var(--sinal); }
       .raia { height: clamp(74px, 9vw, 104px); border-radius: 999px 0 0 999px; display: flex; align-items: center;
         justify-content: space-between; padding: 0 clamp(14px, 2vw, 24px) 0 clamp(18px, 2.6vw, 32px); color: var(--noite); }
       /* A sobra depois da linha fica vazia: o cronômetro para sempre antes dela. */
@@ -69,8 +69,8 @@
       .demo-pe { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
       .demo-pe output { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 0; flex: 1 1 220px; }
       .demo-pe output[data-estado='fora'] { color: var(--magenta); }
-      .demo-pe output[data-estado='ajuste'] { color: var(--amarelo); }
-      .demo-pe output[data-estado='ok'] { color: var(--ciano); }
+      .demo-pe output[data-estado='ajuste'] { color: #ffb224; }
+      .demo-pe output[data-estado='ok'] { color: var(--giz); }
       .demo-pe button { padding: 11px 18px; border-radius: 10px; border: 0; background: var(--sinal); color: var(--giz);
         font: inherit; font-weight: 700; cursor: pointer; }
       .demo-pe button:hover { background: #ff3347; }
@@ -84,7 +84,7 @@
         font-size: clamp(64px, 9vw, 120px); color: var(--amarelo); }
       .passos h3 { font-size: clamp(22px, 2.4vw, 30px); }
       .passos p { margin-top: 8px; color: var(--nevoa); max-width: 58ch; }
-      .medicao { margin-top: 36px; padding: 22px 26px; border-left: 6px solid var(--ciano); background: var(--anil); border-radius: 0 12px 12px 0; max-width: 70ch; }
+      .medicao { margin-top: 36px; padding: 22px 26px; border-left: 6px solid var(--sinal); background: var(--anil); border-radius: 0 12px 12px 0; max-width: 70ch; }
 
       /* ---------- faz e não faz ---------- */
       .limites { background: var(--anil); }
@@ -92,7 +92,7 @@
       .duas h3 { font-size: 24px; margin-bottom: 14px; }
       .duas ul { list-style: none; padding: 0; display: grid; gap: 12px; }
       .duas li { padding-left: 26px; position: relative; }
-      .duas li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 14px; height: 5px; border-radius: 3px; background: var(--ciano); }
+      .duas li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 14px; height: 5px; border-radius: 3px; background: var(--sinal); }
       .duas .nao li::before { background: var(--nevoa); }
 
       /* ---------- instalar ---------- */
@@ -112,6 +112,7 @@
       .perguntas h2 { margin-bottom: 40px; }
 
       footer { padding: 36px var(--margem) 48px; color: var(--nevoa); font-size: 15px; border-top: 1px solid #34343a; }
+      footer p + p { margin-top: 10px; }
 
       @media (max-width: 860px) {
         .abertura-grade { grid-template-columns: 1fr; }
@@ -153,7 +154,7 @@
             <output id="estado" data-estado="fora">A está 4,0 s à frente de B</output>
             <button id="alternar" type="button">Sincronizar</button>
           </div>
-          <small>Simulação do cronômetro do round. A linha branca é o ponto de encontro.</small>
+          <small>Simulação do cronômetro do round. A linha vermelha é o ponto de encontro.</small>
         </div>
       </div>
     </div>
@@ -171,7 +172,7 @@
           <li>
             <div>
               <h3>A sala compara os participantes</h3>
-              <p>Quem digitou o mesmo nome de sala troca essa posição entre si. É a única coisa que sai do seu computador.</p>
+              <p>Quem abriu o mesmo convite troca essa posição direto entre os navegadores, sem servidor no meio.</p>
             </div>
           </li>
           <li>
@@ -190,7 +191,8 @@
           <div>
             <h3>Faz</h3>
             <ul>
-              <li>Alinha todo mundo que está na mesma sala e no mesmo canal.</li>
+              <li>Alinha todo mundo que está na mesma sala.</li>
+              <li>Funciona com cada pessoa na live de um streamer diferente da mesma partida, com um ajuste fino entre os canais.</li>
               <li>Corrige sozinha durante a live, sem pausa e sem contagem.</li>
               <li>Mostra no canto da tela quem está no ponto e quem está à frente.</li>
               <li>Reconecta sozinha se a sala cair.</li>
@@ -209,14 +211,14 @@
       </section>
 
       <section class="faixa-pagina instalar" id="instalar">
-        <h2>Instalar no Chrome ou no Edge</h2>
+        <h2>Instalar no Edge ou no Chrome</h2>
         <ol>
-          <li>Baixe a pasta <code>extension</code> da Sincra e descompacte.</li>
-          <li>Abra <code>chrome://extensions</code> e ative o modo do desenvolvedor.</li>
-          <li>Clique em "Carregar sem compactação" e escolha a pasta.</li>
-          <li>Abra a live na Kick, clique no ícone da Sincra e em "Criar sala".</li>
+          <li>Instale a Sincra pela loja de complementos do Edge.</li>
+          <li>Abra na Kick a live que você quer assistir.</li>
+          <li>Clique no ícone da Sincra e em "Criar sala".</li>
+          <li>Mande o link de convite para o grupo. Quem abre o link entra na sala.</li>
         </ol>
-        <p class="aviso-loja">A publicação na Chrome Web Store está em preparação. Quando sair, a instalação passa a ser um clique.</p>
+        <p class="aviso-loja">A publicação na loja do Edge está em preparação e o link entra aqui quando ela for aprovada. A do Chrome vem depois.</p>
       </section>
 
       <section class="faixa-pagina perguntas" id="perguntas">
@@ -231,7 +233,7 @@
         </details>
         <details>
           <summary>O que a sala fica sabendo sobre mim?</summary>
-          <p>O nome que você digitou, a sala, o canal aberto e o atraso do seu player. Não há conta, senha nem histórico.</p>
+          <p>O nome que você digitou, o canal aberto e o atraso do seu player. Como a conexão é direta, quem está na sala também consegue ver o seu endereço IP, então mande o convite só para quem vai assistir junto. Não há conta, senha nem histórico. Os detalhes estão na <a href="privacidade.html">política de privacidade</a>.</p>
         </details>
         <details>
           <summary>Por que o áudio fica estranho por alguns segundos?</summary>
@@ -239,7 +241,7 @@
         </details>
         <details>
           <summary>Funciona se cada um estiver em um canal?</summary>
-          <p>Não. O alinhamento vale para quem está no mesmo canal da Kick. O painel avisa quando alguém da sala está em outro.</p>
+          <p>Sim. Dá para ver a mesma partida pela live de streamers diferentes. A Sincra alinha pelo horário em que cada transmissão chega na Kick, e um ajuste fino no painel da extensão cobre o atraso próprio de cada streamer. Quem acerta uma vez acerta para a sala toda.</p>
         </details>
         <details>
           <summary>A Sincra é da Kick?</summary>
@@ -248,7 +250,10 @@
       </section>
     </main>
 
-    <footer>Sincra é um projeto independente e não tem vínculo com a Kick nem com a Riot Games. Os nomes citados pertencem aos seus donos.</footer>
+    <footer>
+      <p>Sincra é um projeto independente e não tem vínculo com a Kick nem com a Riot Games. Os nomes citados pertencem aos seus donos.</p>
+      <p><a href="privacidade.html">Política de privacidade</a></p>
+    </footer>
 
     <script>
       // Demonstração: reproduz a regra real da extensão. B está 4 s atrás; ao sincronizar,
