@@ -43,7 +43,7 @@
     </header>
     <main>
       <h1>Privacidade na Sincra</h1>
-      <p class="data">Atualizada em 14 de novembro de 2026, versão 0.6.0 da extensão.</p>
+      <p class="data">Atualizada em 14 de novembro de 2026, versão 0.7.0 da extensão.</p>
       <p>A Sincra é uma extensão que sincroniza a live da Kick entre pessoas que entram na mesma sala. Esta página diz o que ela envia, para quem, e o que ela não coleta.</p>
 
       <h2>O que a extensão envia</h2>
@@ -60,10 +60,13 @@
       <p>Para duas pessoas se conectarem, a extensão publica mensagens de encontro em relays públicos da rede Nostr, que são de terceiros. Quando a sua rede não permite a conexão direta (comum em 4G e em alguns provedores), os dados da sala listados acima também passam por esses relays. Em todos os casos as mensagens vão cifradas com uma chave derivada do código da sala, então os relays não leem o conteúdo nem o código. Eles veem o seu endereço IP, como qualquer site que você visita, e repassam as mensagens sem guardar.</p>
 
       <h2>Endereço IP dentro da sala</h2>
-      <p>Quando a conexão entre os participantes é direta, quem está na mesma sala consegue ver o endereço IP dos outros. O código da sala funciona como senha: mande o convite só para quem vai assistir com você.</p>
+      <p>Quando a conexão entre os participantes é direta, quem está na mesma sala consegue ver o endereço IP dos outros. O código da sala funciona como senha: mande o convite só para quem vai assistir com você. Se você marcar "Esconder meu IP da sala", a Sincra não faz conexão direta e tudo passa pelos relays, então ninguém da sala vê o seu IP.</p>
+
+      <h2>Sala protegida</h2>
+      <p>Quem cria a sala é o anfitrião e aprova quem entra. Para isso, cada navegador gera um par de chaves criptográficas na primeira vez que usa a Sincra. A chave pública vai para a sala junto com as suas mensagens, para os outros conferirem que elas são suas. A chave privada nunca sai do seu navegador. A chave pública não identifica você fora da Sincra.</p>
 
       <h2>O que fica no seu navegador</h2>
-      <p>A sala, o nome, o ajuste entre canais e, se você configurou, o endereço de um servidor próprio ficam salvos só no seu navegador. Sair da sala apaga o código dela das preferências.</p>
+      <p>A sala, o nome, o ajuste entre canais, o par de chaves, a lista de quem você aprovou, a posição do painel e, se você configurou, o endereço de um servidor próprio ficam salvos só no seu navegador. Sair da sala apaga o código dela das preferências.</p>
 
       <h2>O que a Sincra não faz</h2>
       <ul>
